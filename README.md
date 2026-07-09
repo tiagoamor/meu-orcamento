@@ -9,7 +9,8 @@ Webapp de controle de receitas e despesas mensais. Funciona offline, sem servido
 - **Consignados**: parcelas que avançam automaticamente a cada mês, com opção de quitar.
 - **Metas**: checklist de economia com acompanhamento.
 - **Vários anos**: seletor de ano; o saldo final de dezembro vira o inicial de janeiro seguinte.
-- **Backup**: exportar/importar `.json` para mover entre aparelhos.
+- **Sincronização na nuvem**: com um código secreto, os dados salvam e sincronizam entre aparelhos (Netlify Function + Netlify Blobs).
+- **Backup**: exportar/importar `.json` como cópia de segurança.
 
 ## Como usar
 Abra o `index.html` em qualquer navegador moderno. No celular, use "Adicionar à Tela de Início" para virar um app.
@@ -17,8 +18,12 @@ Abra o `index.html` em qualquer navegador moderno. No celular, use "Adicionar à
 ## Publicar online
 Veja [COMO-HOSPEDAR.md](COMO-HOSPEDAR.md) — inclui GitHub Pages, Netlify e Vercel (todos grátis).
 
+## Sincronização na nuvem (Netlify)
+Para sincronizar entre aparelhos, o app precisa ser hospedado no **Netlify**, que roda a função `netlify/functions/sync.mjs` (usa Netlify Blobs). Em Config, defina um **código secreto** (mín. 6 caracteres) e use o mesmo em cada aparelho. O código funciona como senha — escolha algo longo e não óbvio.
+
 ## Tecnologia
-HTML, CSS e JavaScript puro, arquivo único. Único externo: [Chart.js](https://www.chartjs.org/) via CDN.
+Frontend: HTML, CSS e JavaScript puro (arquivo único). Gráficos com [Chart.js](https://www.chartjs.org/) via CDN.
+Backend de sincronização: Netlify Function (`@netlify/blobs`).
 
 ## Privacidade
-Nada é enviado para servidores. Os dados ficam apenas no seu navegador e no backup que você baixar.
+Sem sincronização, os dados ficam só no navegador. Com sincronização, ficam também nos Netlify Blobs, acessíveis apenas por quem tem o código — nunca no repositório público.
